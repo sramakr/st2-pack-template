@@ -1,5 +1,6 @@
 ---
     chain:
+      name: mychain
         -
             name: clone_capdeploy
             ref: "git.clone"
