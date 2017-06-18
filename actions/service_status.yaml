@@ -1,27 +1,40 @@
 ---
-name: service_status
-description: Status of service on remote hosts
-runner_type: local-shell-cmd
-entry_point: ""
-enabled: true
-parameters:
-  sudo:
-    description: "Run command with sudo"
-    type: boolean
-    immutable: true
-    default: true
-  kwarg_op:
-    immutable: true
-  cmd:
-    description: "Command to run"
-    type: string
-    immutable: true
-    default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible  -u clduser --private-key=/opt/private/cap-admin.pem {{hosts}} --become --module-name=service --args='name={{service_name}} state=started'"
-  hosts:
-    description: "Ansible hosts"
-    type: string
-    required: true
-  service_name:
-    description: "Service to check status"
-    type: string
-    required: true
+    chain:
+        -
+            name: clone_capdeploy
+            ref: "git.clone"
+            parameters:
+              source: "https://github.comcast.com/CAP/cap-deploy"
+              destination: /opt
+        -
+            name: service_status
+            description: Status of service on remote hosts
+            runner_type: local-shell-cmd
+            entry_point: ""
+            enabled: true
+            parameters:
+              sudo:
+                description: "Run command with sudo"
+                type: boolean
+                immutable: true
+                default: true
+              kwarg_op:
+                immutable: true
+              cmd:
+                description: "Command to run"
+                type: string
+                immutable: true
+                default: "/opt/stackstorm/virtualenvs/ansible/bin/ansible  -u clduser --private-key=/opt/cap-deploy/private/cap-admin.pem {{hosts}} --become --module-name=service --args='name={{service_name}} state=started'"
+              region:
+                description: "openstack region"
+                type: string
+                required: true
+              hosts:
+                description: "Ansible hosts"
+                type: string
+                required: true
+              service_name:
+                description: "Service to check status"
+                type: string
+                required: true
+    default: "clone_capdeploy"
