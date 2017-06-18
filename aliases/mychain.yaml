@@ -1,0 +1,6 @@
+---
+name: stackstorm.ansible_mychain
+action_ref: st2-pack-template.mychain
+description: Show status for hosts (ansible ping module)
+formats:
+- "status {{hosts}}"
