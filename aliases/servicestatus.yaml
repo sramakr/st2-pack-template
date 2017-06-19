@@ -1,6 +1,0 @@
----
-name: stackstorm.ansible_service_status
-action_ref: st2-pack-template.service_status
-description: Show service status for hosts (ansible ping module)
-formats:
-- "service status {{service_name}} on {{hosts}}"
